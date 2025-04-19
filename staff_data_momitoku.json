@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Miki",
+    "gender": "女性",
+    "skills": [
+      "ワザがすごい"
+    ],
+    "image": "Miki.png",
+    "link": "miki.html",
+    "areas": [
+      "もみ徳 青波店",
+      "もみ徳 瑞月店"
+    ]
+  },
+  {
+    "name": "Taro",
+    "gender": "男性",
+    "skills": [
+      "コリに的確"
+    ],
+    "image": "taro.png",
+    "link": "taro.html",
+    "areas": [
+      "もみ徳 空町店",
+      "もみ徳 鷹沢店"
+    ]
+  },
+  {
+    "name": "Kenta",
+    "gender": "男性",
+    "skills": [
+      "力強い"
+    ],
+    "image": "Kenta.png",
+    "link": "kenta.html",
+    "areas": [
+      "もみ徳 響森店",
+      "もみ徳 雲野店",
+      "もみ徳 朝凪店"
+    ]
+  },
+  {
+    "name": "Haruka",
+    "gender": "女性",
+    "skills": [
+      "スッキリ"
+    ],
+    "image": "Haruka.png",
+    "link": "haruka.html",
+    "areas": [
+      "もみ徳 花渓店",
+      "もみ徳 柚里店"
+    ]
+  },
+  {
+    "name": "Yui",
+    "gender": "女性",
+    "skills": [
+      "丁寧な接客"
+    ],
+    "image": "Yui.png",
+    "link": "yui.html",
+    "areas": [
+      "もみ徳 真名店",
+      "もみ徳 雲野店"
+    ]
+  },
+  {
+    "name": "Souta",
+    "gender": "男性",
+    "skills": [
+      "動作が楽に"
+    ],
+    "image": "Souta.png",
+    "link": "souta.html",
+    "areas": [
+      "もみ徳 空町店",
+      "もみ徳 朝凪店",
+      "もみ徳 青波店"
+    ]
+  }
+]
