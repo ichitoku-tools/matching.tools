@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>施術者マッチング診断</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fff7eb;
+      padding: 2rem;
+      color: #333;
+    }
+    .wrapper {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid #f4a261;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      font-weight: bold;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .results {
+      margin-top: 2rem;
+    }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .card h3 {
+      margin: 0.5rem 0 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>施術者マッチング診断</h1>
+    <div class="form-group">
+      <label>希望エリア:</label><br>
+      <select id="area">
+        <option value="">どこでも</option>
+        <option value="姪浜店">姪浜店</option>
+        <option value="天神西店">天神西店</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>希望する施術者の性別:</label><br>
+      <select id="gender">
+        <option value="">気にしない</option>
+        <option value="男性">男性</option>
+        <option value="女性">女性</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>重視したい項目（最大3つ）:</label><br>
+      <input type="checkbox" name="skill" value="コリに的確"> コリに的確<br>
+      <input type="checkbox" name="skill" value="力強い"> 力強い<br>
+      <input type="checkbox" name="skill" value="動作が楽に"> 動作が楽に<br>
+      <input type="checkbox" name="skill" value="スッキリ"> スッキリ<br>
+      <input type="checkbox" name="skill" value="丁寧な接客"> 丁寧な接客<br>
+      <input type="checkbox" name="skill" value="ワザがすごい"> ワザがすごい
+    </div>
+    <button onclick="matchStaff()">診断する</button>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    let staffList = [];
+
+    fetch('staff_data.json')
+      .then(res => res.json())
+      .then(data => staffList = data);
+
+    function matchStaff() {
+      const area = document.getElementById('area').value;
+      const gender = document.getElementById('gender').value;
+      const selectedSkills = Array.from(document.querySelectorAll('input[name="skill"]:checked')).map(cb => cb.value);
+
+      const results = staffList.map(staff => {
+        let score = 0;
+        if (!area || staff.areas.includes(area)) score++;
+        if (!gender || staff.gender === gender) score++;
+        const matchedSkills = staff.skills.filter(skill => selectedSkills.includes(skill));
+        score += matchedSkills.length;
+        return { ...staff, score };
+      }).filter(s => s.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+      const resultBox = document.getElementById('results');
+      resultBox.innerHTML = results.length ? results.map(s => `
+        <div class="card">
+          <img src="${s.image}" alt="${s.name}" />
+          <div>
+            <h3>${s.name}</h3>
+            <p>性別: ${s.gender}</p>
+            <p>出勤店舗: ${s.areas.join(', ')}</p>
+            <p>得意項目: ${s.skills.join(', ')}</p>
+            <a href="${s.link}" target="_blank">▶ 詳細を見る</a>
+          </div>
+        </div>
+      `).join('') : '<p>一致するスタッフが見つかりませんでした。</p>';
+    }
+  </script>
+</body>
+</html>
